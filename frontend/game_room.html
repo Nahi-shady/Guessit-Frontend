@@ -1,0 +1,92 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Illustra</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <!-- header -->
+    <div class="header">
+      <div class="countdown">
+        <h4 id="countdown">0</h4>
+      </div>
+      <div class="word">
+        <h3 id="word">Game is starting...</h3>
+      </div>
+      <div class="counter">
+        <h3 id="counter">Round</h3>
+      </div>
+    </div>
+
+    <!-- start game button -->
+    <div id="start-game"></div>
+    
+    <!-- Modals to display message -->
+    <div class="container">
+      <div id="new-game-modal" class="modal">
+        <div class="modal-content">
+          <h3>Game starts in...</h3>
+          <h3 id="timer" class="red">10</h3>
+        </div>
+      </div>
+
+      <div class="modal" id="scoreboard-modal">
+        <div class="modal-content">
+          <h4 id="guess-word"></h4>
+          <hr>
+          <ul id="score-lists">
+          </ul>
+        </div>
+      </div>
+
+      <div id="word-choice-modal" class="modal">
+        <div class="modal-content">
+          <h2>Choose a Word</h2>
+          <ul id="word-choices">
+          </ul>
+        </div>
+      </div>
+      
+      <div id="drawer-choosing-modal" class="modal">
+        <div class="modal-content">
+          <h3 id="drawer-choosing"></h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game layouts -->
+    <div class="container">
+      <div class="left">
+        <div class="left-panel">
+          <div class="leaderboard">
+            <h3>Leaderboard</h3>
+            <hr>
+            <ul id="leaderboard-list">
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="middle">
+        <div class="canvas-container">
+          <canvas id="drawing-canvas"></canvas>
+        </div>
+        <div id="controls">
+          <input type="color" id="color-picker">
+          <input type="range" id="brush-size" min="1" max="30" value="8">
+          <button id="clear-canvas">Clear Canvas</button>
+        </div>
+      </div>
+      <div class="right">
+        <div class="chat">
+          <ul id="chat-messages">
+          </ul>
+          <input type="text" id="chat-input" placeholder="Type your message">
+          <button id="send-message">Send</button>
+        </div>
+      </div>
+    </div>
+  
+    <script type="module" src="scripts/game_initializer.js"></script>
+</body>
+</html>
