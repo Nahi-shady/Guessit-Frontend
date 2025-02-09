@@ -33,22 +33,6 @@ export async function initializeGame(player_name, room_code, room_type) {
         const canvasManager = new CanvasManager(wsManager);
         const chatManager = new ChatManager(wsManager);
 
-        // Create a button to start the game
-        const startButtonContainer = document.getElementById('start-game');
-        const newGameButton = document.createElement("button");
-        newGameButton.className = 'btn'
-        newGameButton.textContent = "Start New Game";
-        newGameButton.addEventListener("click", handleNewGameClick);
-        startButtonContainer.appendChild(newGameButton);
-
-        // Handle new game button click
-        function handleNewGameClick() {
-            if (!wsManager.game_started) {
-
-                const message = { type: "new_game" };
-                wsManager.sendMessage(message); 
-            }
-        }
 
     } catch (error) {
         console.error("Error initializing game: ", error);
