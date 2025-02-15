@@ -36,11 +36,6 @@ export default class WebSocketManager {
         counterElem.textContent = this.turn_count
           ? `Round: ${this.turn_count}`
           : "Round:";
-      // Hide the start button if the game has started.
-      const startButton = document.getElementById("start-game");
-      if (this.game_started && startButton) {
-        startButton.style.display = "none";
-      }
     }
   
     onMessage(event) {
@@ -113,8 +108,6 @@ export default class WebSocketManager {
     // Handles new game initialization and countdown display.
     handleNewGame(data) {
       this.game_started = true;
-      const startButton = document.getElementById("start-game");
-      if (startButton) startButton.style.display = "none";
   
       let seconds = data.timeout;
       const modal = document.getElementById("new-game-modal");
@@ -175,12 +168,11 @@ export default class WebSocketManager {
     handleDisplayFinalScore(data) {
       const timeout = data.timeout;
       const scoreboard = data.scoreboard;
-      const modal = document.getElementById("scoreboard-modal");
-      const scoreboardList = document.getElementById("score-lists");
+
+      const modal = document.getElementById("final-scoreboard-modal");
+      const scoreboardList = document.getElementById("final-score-lists");
       if (scoreboardList) scoreboardList.innerHTML = "";
   
-      const guessWord = document.getElementById("guess-word");
-      if (guessWord) guessWord.textContent = `Final Stand!`;
   
       scoreboard.forEach((player) => {
         const li = document.createElement("li");
