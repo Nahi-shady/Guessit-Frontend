@@ -2,12 +2,12 @@
 export default class WebSocketManager {
     constructor(url, playerName, canvasMessageHandler, chatMessageHandler) {
       this.playerName = playerName;
-      this.drawer_name = '';
-      this.current_word = '';
-      this.turn_count = null;
-      this.game_started = false;
-      this.skip_turn = false;
-      this.countdownInterval = null;
+      this.drawerName = '';
+      this.currentWord = '';
+      this.turnCount = null;
+      this.gameStarted = false;
+      this.skipTurn = false;
+      this.countDownInterval = null;
   
       this.url = url;
       this.canvasMessageHandler = canvasMessageHandler;
@@ -29,12 +29,12 @@ export default class WebSocketManager {
       if (timerElem) timerElem.textContent = "0";
   
       const wordElem = document.getElementById("word");
-      if (wordElem) wordElem.textContent = this.current_word || "_ _ _ _";
+      if (wordElem) wordElem.textContent = this.currentWord || "_ _ _ _";
   
       const counterElem = document.getElementById("counter");
       if (counterElem)
-        counterElem.textContent = this.turn_count
-          ? `Round: ${this.turn_count}`
+        counterElem.textContent = this.turnCount
+          ? `Round: ${this.turnCount}`
           : "Round:";
     }
   
@@ -63,18 +63,18 @@ export default class WebSocketManager {
               this.handleNewGame(data);
               break;
             case "new_turn":
-              console.log('Drawer: ', this.drawer_name,);
+              console.log('Drawer: ', this.drawerName,);
               this.handleNewTurn(data);
               break;
             case "game_over":
               this.handleDisplayFinalScore(data);
               break;
             case "hint_update":
-              this.current_word = data.hint;
+              this.currentWord = data.hint;
               this.updateHeader();
               break;
             case "skipping_turn":
-              this.skip_turn = true;
+              this.skipTurn = true;
               break;
             case "leaderboard_update":
               this.handleLeaderboardUpdate(data);
@@ -83,12 +83,12 @@ export default class WebSocketManager {
               this.handleDisplayScore(data);
               break;
             case "word_choices":
-              if (this.drawer_name === this.playerName) {
+              if (this.drawerName === this.playerName) {
                 this.handleWordChoices(data);
               }
               break;
             case "drawer_choosing_word":
-              if (this.drawer_name !== this.playerName) {
+              if (this.drawerName !== this.playerName) {
                 this.handleDrawerChoosingWord(data);
               }
               break;
@@ -96,7 +96,7 @@ export default class WebSocketManager {
               this.handleClearModal();
               break;
             default:
-              console.log(this.playerName, "----", this.drawer_name);
+              console.log(this.playerName, "----", this.drawerName);
               console.log(`Received message: ${data.message}`);
           }
         }
@@ -107,7 +107,7 @@ export default class WebSocketManager {
   
     // Handles new game initialization and countdown display.
     handleNewGame(data) {
-      this.game_started = true;
+      this.gameStarted = true;
   
       let seconds = data.timeout;
       const modal = document.getElementById("new-game-modal");
@@ -129,21 +129,21 @@ export default class WebSocketManager {
   
     // Handles a new turn, updating the drawer and starting a countdown.
     handleNewTurn(data) {
-      this.drawer_name = data.drawer;
-      this.turn_count = data.turn;
-      this.skip_turn = false;
+      this.drawerName = data.drawer;
+      this.turnCount = data.turn;
+      this.skipTurn = false;
       this.updateHeader();
   
       let seconds = data.timeout;
       const countdownElem = document.getElementById("countdown");
       if (countdownElem) countdownElem.textContent = seconds;
   
-      if (this.countdownInterval) {
-        clearInterval(this.countdownInterval);
+      if (this.countDownInterval) {
+        clearInterval(this.countDownInterval);
       }
-      this.countdownInterval = setInterval(() => {
-        if (this.skip_turn || seconds <= 0) {
-          clearInterval(this.countdownInterval);
+      this.countDownInterval = setInterval(() => {
+        if (this.skipTurn || seconds <= 0) {
+          clearInterval(this.countDownInterval);
           if (countdownElem) countdownElem.textContent = "timeout";
           return;
         }
@@ -160,6 +160,16 @@ export default class WebSocketManager {
       data.leaderboard.forEach((player) => {
         const li = document.createElement("li");
         li.textContent = `${player.name}: ${player.score}`;
+        let classes = "list-style "
+        
+        if (player.name === this.playerName) {
+          classes += " player-identifier "
+        }
+        if (player.name === this.drawerName){
+          classes += " drawer-identifier "
+        };
+
+        li.className = classes;
         leaderboardList.appendChild(li);
       });
     }
@@ -258,7 +268,7 @@ export default class WebSocketManager {
       const modal = document.getElementById("drawer-choosing-modal");
       const header = document.getElementById("drawer-choosing");
       if (header)
-        header.textContent = `${this.drawer_name} is choosing a word...`;
+        header.textContent = `${this.drawerName} is choosing a word...`;
       if (modal) {
         modal.style.display = "flex";
         setTimeout(() => {
