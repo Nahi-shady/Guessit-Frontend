@@ -160,19 +160,19 @@ export default class WebSocketManager {
       data.leaderboard.forEach((player) => {
         const li = document.createElement("li");
         li.textContent = `${player.name}: ${player.score}`;
-        let classes = "list-style "
+        
+        li.classList.add("list-style");
         
         if (player.name === this.playerName) {
-          classes += " player-identifier "
+          li.classList.add("player-identifier");
         }
-        if (player.name === this.drawerName){
-          classes += " drawer-identifier "
-        };
-
-        li.className = classes;
+        if (player.name === this.drawerName) {
+          li.classList.add("drawer-identifier");
+        }
+        
         leaderboardList.appendChild(li);
       });
-    }
+    }    
   
     // Displays Final score.
     handleDisplayFinalScore(data) {
