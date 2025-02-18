@@ -93,7 +93,7 @@ export default class CanvasManager {
     }
 
     draw(e) {
-        if (!this.drawing || this.wsManager.drawer_name !== this.wsManager.playerName) return;
+        if (!this.drawing || this.wsManager.drawerName !== this.wsManager.playerName) return;
         
         const currentX = e.offsetX;
         const currentY = e.offsetY;
@@ -111,7 +111,7 @@ export default class CanvasManager {
     }
 
     touchDraw(e) {
-        if (!this.drawing || this.wsManager.drawer_name !== this.wsManager.playerName) return;
+        if (!this.drawing || this.wsManager.drawerName !== this.wsManager.playerName) return;
         e.preventDefault(); // Prevent scrolling or zooming
 
         const { x: currentX, y: currentY } = this.normalizeTouchEvent(e);
@@ -143,7 +143,7 @@ export default class CanvasManager {
     }
 
     sendClearCanvas() {
-        if (this.wsManager.drawer_name !== this.wsManager.playerName) {
+        if (this.wsManager.drawerName !== this.wsManager.playerName) {
             return;
         }
         const data = { type: "clear_canvas" };
