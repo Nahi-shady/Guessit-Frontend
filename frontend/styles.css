@@ -11,7 +11,23 @@ ul {
   list-style: none;
   padding: 0;
 }
+.list-style{
+  background-color: #8ee1e4;
+  border: 1px solid #ddd;    
+  border-radius: 4px;         
+  padding: 8px 12px;         
+  margin-bottom: 6px;         
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
 
+.player-identifier{
+  border-bottom: 3px solid #f70000;  
+}
+.drawer-identifier{
+  background-color: #d8d275;  
+}
 /* common styles for the page */
 .btn {
   width: auto;
